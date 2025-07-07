@@ -1120,7 +1120,7 @@
         <header>
           <h2 class="h2 article-title">Contact</h2>
         </header>
-
+      
         <section class="mapbox" data-mapbox>
           <figure>
             <iframe
@@ -1128,13 +1128,19 @@
               width="400" height="300" loading="lazy"></iframe>
           </figure>
         </section>
-
+      
         <section class="contact-form">
-
+        
           <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="https://formsubmit.co/xzylreyarpon@gmail.com" method="POST" class="form" data-form>
-
+        
+          <form 
+            action="https://formsubmit.co/xzylreyarpon@gmail.com" 
+            method="POST" 
+            class="form" 
+            data-form 
+            onsubmit="showToast(event)"
+          >
+        
             <div class="input-wrapper">
               <input type="text" name="name" class="form-input" placeholder="Full name" required>
               <input type="email" name="email" class="form-input" placeholder="Email address" required>
@@ -1155,11 +1161,67 @@
             <input type="hidden" name="_next" value="https://www.zylarpon.xyz/">
           
           </form>
-
-
+        
         </section>
-
+      
+        <!-- Toast container -->
+        <div id="toast" class="toast hidden">
+          ✅ Message sent successfully!
+        </div>
+      
+        <!-- Toast styles -->
+        <style>
+          .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #28a745;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(20px);
+            z-index: 9999;
+          }
+        
+          .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        
+          .toast.hidden {
+            display: none;
+          }
+        </style>
+      
+        <!-- Toast script -->
+        <script>
+          function showToast(event) {
+            event.preventDefault(); // Stop form from submitting immediately
+          
+            const form = event.target;
+            const toast = document.getElementById('toast');
+          
+            toast.classList.remove('hidden');
+            toast.classList.add('show');
+          
+            // Hide the toast after 2.5 seconds
+            setTimeout(() => {
+              toast.classList.remove('show');
+            }, 2500);
+          
+            // Submit form after a short delay (after showing toast)
+            setTimeout(() => {
+              form.submit();
+            }, 1500);
+          }
+        </script>
+      
       </article>
+
 
     </div>
 
@@ -1174,6 +1236,33 @@
     - custom js link
   -->
   <script src="./assets/js/script.js"></script>
+
+  <!--
+    - message notif pop up
+  -->
+    <script>
+    function showSuccessMessage(event) {
+      event.preventDefault(); // Prevent form from submitting immediately
+      const form = event.target;
+
+      // Show the success message
+      const messageBox = document.createElement('div');
+      messageBox.textContent = "✅ Your message has been sent!";
+      messageBox.style.background = "#d4edda";
+      messageBox.style.color = "#155724";
+      messageBox.style.padding = "1rem";
+      messageBox.style.marginTop = "1rem";
+      messageBox.style.borderRadius = "8px";
+      messageBox.style.fontWeight = "bold";
+      form.parentNode.insertBefore(messageBox, form.nextSibling);
+
+      // Now actually submit the form after a short delay
+      setTimeout(() => {
+        form.submit();
+      }, 1500); // Delay submit by 1.5s to show confirmation
+    }
+  </script>
+
 
   <!--
     - ionicon link
